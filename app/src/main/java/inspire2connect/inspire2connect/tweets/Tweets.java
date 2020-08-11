@@ -1,6 +1,6 @@
-package inspire2connect.inspire2connect.home;
+package inspire2connect.inspire2connect.tweets;
 
-public class Stats {
+public class Tweets {
     public String Fact1;
     public String Fact2;
     public String Fact3;

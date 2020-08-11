@@ -6,16 +6,20 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale;
 
 import inspire2connect.inspire2connect.R;
 import inspire2connect.inspire2connect.mythGuidelineUpdates.UpdateActivity;
+import inspire2connect.inspire2connect.tweets.tweetActivity;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class BaseActivity extends AppCompatActivity {
@@ -27,6 +31,12 @@ public class BaseActivity extends AppCompatActivity {
     public static final DatabaseReference mythReference = FirebaseDatabase.getInstance("https://washkaro-myth.firebaseio.com").getReference();
     public static final DatabaseReference whoReference = FirebaseDatabase.getInstance("https://washkaro-who.firebaseio.com").getReference();
     public static final DatabaseReference statsReference = FirebaseDatabase.getInstance("https://washkaro-stats.firebaseio.com").getReference();
+    public static final DatabaseReference successStoriesReference = FirebaseDatabase.getInstance("https://washkaro-success.firebaseio.com").getReference();
+    public static final DatabaseReference faqsReference = FirebaseDatabase.getInstance("https://washkaro-faq.firebaseio.com").getReference();
+    public static final DatabaseReference tweetsReference = FirebaseDatabase.getInstance ("https://washkaro-twitter.firebaseio.com").getReference ();
+
+    // Firebase Analytics
+    public static FirebaseAnalytics firebaseAnalytics;
 
     // Firebase Authenticaiton
     public static FirebaseAuth firebaseAuth;
@@ -37,6 +47,9 @@ public class BaseActivity extends AppCompatActivity {
     public static final String GUIDELINES = "0";
     public static final String UPDATES = "1";
     public static final String MYTH = "2";
+    public static final String FAQ = "3";
+    public static final String SUCCESS_STORIES = "4";
+    public static final String TWEETS = "5";
     public static final String DATE = "D";
     public static final String DATE_YES = "1";
     public static final String DATE_NO = "0";
@@ -108,6 +121,11 @@ public class BaseActivity extends AppCompatActivity {
         activity.startActivity(i);
     }
 
+    public static String getURLEncoding(String surl) throws Exception{
+        URL u = new URL(surl);
+        return new URI(u.getProtocol(), u.getAuthority(), u.getPath(), u.getQuery(), u.getRef()).toString();
+    }
+
     public static Intent getGovernmentIntent(Activity activity) {
         Intent i = new Intent(activity, UpdateActivity.class);
         i.putExtra(TYPE, UPDATES);
@@ -115,8 +133,8 @@ public class BaseActivity extends AppCompatActivity {
         return i;
     }
 
-    public static Intent getGuidelinesIntent(Activity activity) {
-        Intent i = new Intent(activity, UpdateActivity.class);
+    public static Intent getSocialAnalysisIntent(Activity activity) {
+        Intent i = new Intent(activity, tweetActivity.class);
         i.putExtra(TYPE, GUIDELINES);
         i.putExtra(DATE, DATE_NO);
         return i;
@@ -125,6 +143,27 @@ public class BaseActivity extends AppCompatActivity {
     public static Intent getMythIntent(Activity activity) {
         Intent i = new Intent(activity, UpdateActivity.class);
         i.putExtra(TYPE, MYTH);
+        i.putExtra(DATE, DATE_NO);
+        return i;
+    }
+
+    public static Intent getTwitterIntent(Activity activity) {
+        Intent i = new Intent(activity, tweetActivity.class);
+        i.putExtra(TYPE, TWEETS);
+        i.putExtra(DATE, DATE_NO);
+        return i;
+    }
+
+    public static Intent getSuccessStoriesIntent(Activity activity) {
+        Intent i = new Intent(activity, UpdateActivity.class);
+        i.putExtra(TYPE, SUCCESS_STORIES);
+        i.putExtra(DATE, DATE_NO);
+        return i;
+    }
+
+    public static Intent getFAQsIntent(Activity activity) {
+        Intent i = new Intent(activity, UpdateActivity.class);
+        i.putExtra(TYPE, FAQ);
         i.putExtra(DATE, DATE_NO);
         return i;
     }

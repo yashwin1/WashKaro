@@ -1,4 +1,4 @@
-package inspire2connect.inspire2connect.mythGuidelineUpdates;
+package inspire2connect.inspire2connect.tweets;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,18 +27,19 @@ import inspire2connect.inspire2connect.R;
 import static inspire2connect.inspire2connect.utils.BaseActivity.firebaseAnalytics;
 import static inspire2connect.inspire2connect.utils.BaseActivity.firebaseUser;
 
-public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHolder> {
-    private static MyClickListener myClickListener;
+
+public class tweetRecyclerViewAdapter extends RecyclerView.Adapter<tweetRecyclerViewAdapter.MyViewHolder> {
+    private static tweetRecyclerViewAdapter.MyClickListener myClickListener;
     Context context;
 
     private TextToSpeech tts;
 
-    private ArrayList<guidelinesObject> List;
+    private ArrayList<tweetObject> List;
 
     boolean isSpeaking = false;
     private ImageView curPlaying = null;
 
-    public UpdatesAdapter(Context context, ArrayList<guidelinesObject> List) {
+    public tweetRecyclerViewAdapter(Context context, ArrayList<tweetObject> List) {
         this.context = context;
         this.List = List;
     }
@@ -48,7 +48,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHo
         this.tts = tts;
     }
 
-    public ArrayList<guidelinesObject> getResult() {
+    public ArrayList<tweetObject> getResult() {
         return List;
     }
 
@@ -58,7 +58,6 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHo
         Log.d("sharing", toShare);
         Spanned shareBody = Html.fromHtml(toShare);
         String share = shareBody.toString();
-        //sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, share);
 
         // Firebase Analytics
@@ -70,28 +69,27 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHo
         context.startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
-    public void setOnItemClickListener(MyClickListener myClickListener) {
-        UpdatesAdapter.myClickListener = myClickListener;
+    public void setOnItemClickListener(tweetRecyclerViewAdapter.MyClickListener myClickListener) {
+        tweetRecyclerViewAdapter.myClickListener = myClickListener;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public tweetRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.updates_item, parent, false);
-        return new MyViewHolder(itemView);
+                .inflate(R.layout.tweet_row, parent, false);
+        return new tweetRecyclerViewAdapter.MyViewHolder(itemView);
     }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final guidelinesObject movie = List.get(position);
-        holder.title.setText(movie.getTitle());
-        holder.actual_text.setText(movie.getContent());
+    public void onBindViewHolder(final tweetRecyclerViewAdapter.MyViewHolder holder, final int position) {
+        final tweetObject movie = List.get(position);
+        holder.title.setText(movie.getText());
         holder.play_pause.setImageDrawable(context.getDrawable(R.drawable.ic_play_arrow_black_34dp));
         holder.share_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                share(movie.getTitle());
+                share(movie.getText());
             }
         });
         isSpeaking = false;
@@ -100,12 +98,10 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHo
             public void onClick(View v) {
                 // Firebase Analytics
                 Bundle bundle = new Bundle();
+                bundle.putString("ArticleTitle", movie.getText());
                 bundle.putString("UID", firebaseUser.getUid());
-                bundle.putString("ArticleTitle", movie.getTitle());
 
                 if(isSpeaking) {
-                    // Firebase Analytics
-                    bundle.putString("ArticleAudioStatus", "Audio OFF");
                     if(tts.isSpeaking()) {
                         if(curPlaying!=null) {
                             curPlaying.setImageDrawable(context.getDrawable(R.drawable.ic_play_arrow_black_34dp));
@@ -114,7 +110,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHo
                         isSpeaking = false;
                         holder.play_pause.setImageDrawable(context.getDrawable(R.drawable.ic_play_arrow_black_34dp));
                     } else {
-                        tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        tts.setOnUtteranceProgressListener(new UtteranceProgressListener () {
                             @Override
                             public void onDone(String utteranceId) {
                                 isSpeaking = false;
@@ -143,7 +139,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHo
                         bundle.putString("ArticleAudioStatus", "Audio ON");
 
                         holder.play_pause.setImageDrawable(context.getDrawable(R.drawable.ic_pause_black_34dp));
-                        tts.speak(movie.getTitle(), TextToSpeech.QUEUE_FLUSH, null);
+                        tts.speak(movie.getText (), TextToSpeech.QUEUE_FLUSH, null);
                         curPlaying = holder.play_pause;
                         isSpeaking = true;
 
@@ -176,7 +172,7 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHo
                     bundle.putString("ArticleAudioStatus", "Audio ON");
 
                     holder.play_pause.setImageDrawable(context.getDrawable(R.drawable.ic_pause_black_34dp));
-                    tts.speak(movie.getTitle(), TextToSpeech.QUEUE_FLUSH, null);
+                    tts.speak(movie.getText(), TextToSpeech.QUEUE_FLUSH, null);
                     curPlaying = holder.play_pause;
                     isSpeaking = true;
 
@@ -229,15 +225,15 @@ public class UpdatesAdapter extends RecyclerView.Adapter<UpdatesAdapter.MyViewHo
 
         public MyViewHolder(View view) {
             super(view);
-            title = view.findViewById(R.id.myth_title);
-            actual_text = view.findViewById(R.id.actual_text);
-            title.setMovementMethod(LinkMovementMethod.getInstance());
-            play_pause = view.findViewById(R.id.play_pause_myth);
-            main_layout = view.findViewById(R.id.main_layout);
-            cardView = view.findViewById(R.id.cardView);
+            title = view.findViewById(R.id.tweet_text);
+            actual_text = view.findViewById(R.id.actual_tweet_text);
+            title.setMovementMethod( LinkMovementMethod.getInstance());
+            play_pause = view.findViewById(R.id.play_pause_tweet);
+            main_layout = view.findViewById(R.id.main_tweet_layout);
+            cardView = view.findViewById(R.id.tweetCardView);
             title.setOnClickListener(this);
             actual_text.setOnClickListener(this);
-            share_button = view.findViewById(R.id.share_button);
+            share_button = view.findViewById(R.id.share_tweet_button);
         }
 
         @Override

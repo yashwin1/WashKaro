@@ -112,7 +112,15 @@ public class guidelineViewActivity extends BaseActivity implements Serializable 
             public void onClick(View v) {
                 Intent i = new Intent(context, urlActivity.class);
                 i.putExtra("url", redirect_url);
-                i.putExtra("name", getString(R.string.india_covid_map_tile));
+                i.putExtra("name", getString(R.string.information_link ));
+
+                // Firebase Analytics
+                Bundle bundle = new Bundle();
+                bundle.putString("UID", firebaseUser.getUid());
+                bundle.putString("ArticleTitle", title);
+                bundle.putString("ArticleURL", redirect_url);
+                firebaseAnalytics.logEvent("ArticleSourceChecked", bundle);
+
                 startActivity(i);
             }
         });
@@ -127,7 +135,16 @@ public class guidelineViewActivity extends BaseActivity implements Serializable 
         detailed_play_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Firebase Analytics
+                Bundle bundle = new Bundle();
+                bundle.putString("UID", firebaseUser.getUid());
+                bundle.putString("ArticleTitle", title);
+                bundle.putString("ArticleURL", redirect_url);
+
                 if (isSpeaking) {
+                    // Firebase Analytics
+                    bundle.putString("ArticleAudioStatus", "Audio OFF");
+
                     isSpeaking = false;
                     mTTS.stop();
                     detailed_play_button.setImageDrawable(getDrawable(R.drawable.ic_play_arrow_black_34dp));
@@ -136,12 +153,22 @@ public class guidelineViewActivity extends BaseActivity implements Serializable 
                     isSpeaking = true;
                     detailed_play_button.setImageDrawable(getDrawable(R.drawable.ic_pause_black_34dp));
                 }
+
+                // Firebase Analytics
+                firebaseAnalytics.logEvent("ArticleAudio", bundle);
+
             }
         });
 
     }
 
     public void share(String toShare) {
+        // Firebase Analytics
+        Bundle bundle = new Bundle();
+        bundle.putString("UID", firebaseUser.getUid());
+        bundle.putString("ArticleTitle", title);
+        firebaseAnalytics.logEvent("ArticleShared", bundle);
+
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/html");
         Log.d("sharing", toShare);
@@ -153,7 +180,6 @@ public class guidelineViewActivity extends BaseActivity implements Serializable 
 
     @Override
     public boolean onSupportNavigateUp() {
-
         finish();
         return true;
     }

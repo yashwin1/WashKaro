@@ -9,7 +9,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,27 +85,42 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
-                                android:fontFamily="@font/mukta_bold"
-                                android:text="@string/fact_1"
+                                android:fontFamily="@font/mukta_medium"
+                                android:paddingHorizontal="0dp"
+                                android:maxLines="3"
+                                android:ellipsize="none"
                                 android:textAlignment="center"
                                 android:textColor="@color/blackcolor"
-                                android:textSize="12sp"
+                                android:textSize="@dimen/home_stat_text"
                                 app:layout_constraintBottom_toTopOf="@+id/mohfw_data2"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
-
-
 
                             <TextView
                                 android:id="@+id/mohfw_data2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
+                                android:fontFamily="@font/mukta_semibold"
                                 android:text="@string/empty_stats"
                                 android:textAlignment="center"
                                 android:textColor="@color/app_blue"
                                 android:textSize="@dimen/home_stat_val"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/mohfw_currency2"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <TextView
+                                android:id="@+id/mohfw_currency2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:textAlignment="center"
+                                android:textColor="@color/app_blue"
+                                android:fontFamily="@font/mukta_regular"
+                                android:textSize="@dimen/home_stat_text"
                                 android:textStyle="bold"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -129,8 +145,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
-                                android:fontFamily="@font/mukta_bold"
-                                android:text="@string/fact_2"
+                                android:fontFamily="@font/mukta_medium"
+                                android:maxLines="3"
+                                android:ellipsize="none"
                                 android:textAlignment="center"
                                 android:textColor="@color/blackcolor"
                                 android:textSize="@dimen/home_stat_text"
@@ -146,9 +163,24 @@
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
                                 android:text="@string/empty_stats"
+                                android:fontFamily="@font/mukta_semibold"
                                 android:textAlignment="center"
                                 android:textColor="@color/app_blue"
                                 android:textSize="@dimen/home_stat_val"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/mohfw_currency3"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <TextView
+                                android:id="@+id/mohfw_currency3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:textAlignment="center"
+                                android:textColor="@color/app_blue"
+                                android:textSize="@dimen/home_stat_text"
+                                android:fontFamily="@font/mukta_regular"
                                 android:textStyle="bold"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -173,8 +205,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
-                                android:fontFamily="@font/mukta_bold"
-                                android:text="@string/fact_3"
+                                android:fontFamily="@font/mukta_medium"
+                                android:maxLines="3"
+                                android:ellipsize="none"
                                 android:textAlignment="center"
                                 android:textColor="@color/blackcolor"
                                 android:textSize="@dimen/home_stat_text"
@@ -193,7 +226,22 @@
                                 android:textAlignment="center"
                                 android:textColor="@color/app_blue"
                                 android:textSize="@dimen/home_stat_val"
+                                android:fontFamily="@font/mukta_semibold"
                                 android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/mohfw_currency4"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <TextView
+                                android:id="@+id/mohfw_currency4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:textAlignment="center"
+                                android:textColor="@color/app_blue"
+                                android:textSize="@dimen/home_stat_text"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/mukta_regular"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent" />
@@ -217,12 +265,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="false"
-                                android:fontFamily="@font/mukta_bold"
-                                android:text="@string/fact_4"
+                                android:fontFamily="@font/mukta_medium"
+                                android:maxLines="2"
+                                android:ellipsize="none"
                                 android:textAlignment="center"
                                 android:textColor="@color/blackcolor"
                                 android:textSize="@dimen/home_stat_text"
-                                app:layout_constraintBottom_toTopOf="@+id/mohfw_data5"
+                                app:layout_constraintBottom_toTopOf="@id/mohfw_data5"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -236,8 +285,23 @@
                                 android:text="@string/empty_stats"
                                 android:textAlignment="center"
                                 android:textColor="@color/app_blue"
+                                android:fontFamily="@font/mukta_semibold"
                                 android:textSize="@dimen/home_stat_val"
                                 android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@id/mohfw_currency5"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+                            <TextView
+                                android:id="@+id/mohfw_currency5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:textAlignment="center"
+                                android:textColor="@color/app_blue"
+                                android:textSize="@dimen/home_stat_text"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/mukta_regular"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent" />
@@ -301,195 +365,21 @@
                 app:rowCount="2"
                 app:useDefaultMargins="true">
 
-                <!--                <LinearLayout-->
-                <!--                    android:layout_width="0dp"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginBottom="12dp"-->
-                <!--                    android:clipToPadding="false"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:orientation="vertical"-->
-                <!--                    app:layout_column="0"-->
-                <!--                    android:paddingBottom="@dimen/home_card_elev"-->
-                <!--                    app:layout_columnWeight="1"-->
-                <!--                    app:layout_gravity="fill_horizontal"-->
-                <!--                    app:layout_row="0">-->
-
-
-                <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-                <!--                        android:id="@+id/advisories_tile"-->
-                <!--                        android:layout_width="150dp"-->
-                <!--                        android:layout_height="match_parent"-->
-                <!--                        android:background="@drawable/buttonback2"-->
-                <!--                        android:clickable="true"-->
-                <!--                        android:elevation="@dimen/home_card_elev">-->
-
-                <!--                        <ImageButton-->
-                <!--                            android:id="@+id/image_button1"-->
-                <!--                            style="@android:style/Widget.Material.Light.ImageButton"-->
-                <!--                            android:layout_width="wrap_content"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:layout_below="@+id/imgbut_text1"-->
-                <!--                            android:layout_alignParentStart="true"-->
-                <!--                            android:layout_alignParentEnd="true"-->
-                <!--                            android:layout_alignParentBottom="true"-->
-                <!--                            android:layout_marginTop="4dp"-->
-                <!--                            android:layout_marginBottom="4dp"-->
-                <!--                            android:background="#FFFFFF"-->
-                <!--                            android:clickable="false"-->
-                <!--                            android:contentDescription="Card Image"-->
-                <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                            app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                <!--                            app:layout_constraintTop_toBottomOf="@+id/imgbut_text1"-->
-                <!--                            app:srcCompat="@drawable/ic_official_adv" />-->
-
-                <!--                        <TextView-->
-                <!--                            android:id="@+id/imgbut_text1"-->
-                <!--                            android:layout_width="match_parent"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:layout_marginTop="4dp"-->
-                <!--                            android:fontFamily="@font/mukta_semibold"-->
-                <!--                            android:text="@string/govt_advisory_tile"-->
-                <!--                            android:textAlignment="center"-->
-                <!--                            android:textColor="@color/blackcolor"-->
-                <!--                            android:textSize="@dimen/home_card_font"-->
-                <!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-                <!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-                <!--                </LinearLayout>-->
-
-                <!--                <LinearLayout-->
-                <!--                    android:layout_width="0dp"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginBottom="12dp"-->
-                <!--                    android:clipToPadding="false"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:orientation="vertical"-->
-                <!--                    app:layout_column="0"-->
-                <!--                    app:layout_columnWeight="1"-->
-                <!--                    android:padding="@dimen/home_card_elev"-->
-                <!--                    app:layout_gravity="fill_horizontal"-->
-                <!--                    app:layout_row="1">-->
-
-                <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-                <!--                        android:id="@+id/symptom_tracker_tile"-->
-                <!--                        android:layout_width="150dp"-->
-                <!--                        android:layout_height="match_parent"-->
-                <!--                        android:background="@drawable/buttonback2"-->
-                <!--                        android:clickable="true"-->
-                <!--                        android:elevation="@dimen/home_card_elev">-->
-
-                <!--                        <ImageButton-->
-                <!--                            android:id="@+id/image_button2"-->
-                <!--                            style="@android:style/Widget.Material.Light.ImageButton"-->
-                <!--                            android:layout_width="wrap_content"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:layout_below="@+id/imgbut_text2"-->
-                <!--                            android:layout_alignParentStart="true"-->
-                <!--                            android:layout_alignParentEnd="true"-->
-                <!--                            android:layout_alignParentBottom="true"-->
-                <!--                            android:layout_marginTop="4dp"-->
-                <!--                            android:layout_marginBottom="2dp"-->
-                <!--                            android:background="#FFFFFF"-->
-                <!--                            android:clickable="false"-->
-                <!--                            android:contentDescription="Card Image"-->
-                <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                            app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                <!--                            app:layout_constraintTop_toBottomOf="@+id/imgbut_text2"-->
-                <!--                            app:srcCompat="@drawable/ic_people" />-->
-
-                <!--                        <TextView-->
-                <!--                            android:id="@+id/imgbut_text2"-->
-                <!--                            android:layout_width="match_parent"-->
-                <!--                            android:layout_height="wrap_content"-->
-                <!--                            android:layout_marginTop="4dp"-->
-                <!--                            android:fontFamily="@font/mukta_semibold"-->
-                <!--                            android:text="@string/symptom_tracker_tile"-->
-                <!--                            android:textAlignment="center"-->
-                <!--                            android:textColor="@color/blackcolor"-->
-                <!--                            android:textSize="@dimen/home_card_font"-->
-                <!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-                <!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-                <!--                </LinearLayout>-->
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:clipToPadding="false"
                     android:gravity="center"
+                    android:paddingBottom="@dimen/home_card_elev"
                     android:orientation="vertical"
                     app:layout_column="0"
-                    android:paddingBottom="@dimen/home_card_elev"
                     app:layout_columnWeight="1"
                     app:layout_gravity="fill_horizontal"
                     app:layout_row="0">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/contact_tracer_tile"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/buttonback2"
-                        android:clickable="true"
-                        android:elevation="@dimen/home_card_elev"
-                        app:layout_column="0"
-                        app:layout_row="1">
-
-                        <ImageButton
-                            android:id="@+id/image_button3"
-                            style="@android:style/Widget.Material.Light.ImageButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgbut_text3"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="2dp"
-                            android:background="#FFFFFF"
-                            android:clickable="false"
-                            android:contentDescription="Card Image"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgbut_text3"
-                            app:layout_constraintVertical_bias="0.0"
-                            app:srcCompat="@drawable/ic_symptom_tracker" />
-
-                        <TextView
-                            android:id="@+id/imgbut_text3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/mukta_semibold"
-                            android:text="@string/social_distancing_tile"
-                            android:textAlignment="center"
-                            android:textColor="@color/blackcolor"
-                            android:textSize="@dimen/home_card_font"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:clipToPadding="false"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/home_card_elev"
-                    android:orientation="vertical"
-                    app:layout_column="1"
-                    app:layout_columnWeight="1"
-                    app:layout_gravity="fill_horizontal"
-                    app:layout_row="0">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/onair_tile"
+                        android:id="@+id/success_stories_tile"
                         android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:background="@drawable/buttonback2"
@@ -499,31 +389,32 @@
                         app:layout_row="0">
 
                         <ImageButton
-                            android:id="@+id/image_button4"
+                            android:id="@+id/image_button3"
                             style="@android:style/Widget.Material.Light.ImageButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgbut_text4"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/imgbut_text3"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="2dp"
                             android:background="#FFFFFF"
                             android:clickable="false"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="8dp"
                             android:contentDescription="Card Image"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgbut_text4"
+                            app:layout_constraintTop_toBottomOf="@+id/imgbut_text3"
                             app:srcCompat="@drawable/ic_onair" />
 
                         <TextView
-                            android:id="@+id/imgbut_text4"
+                            android:id="@+id/imgbut_text3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/mukta_semibold"
-                            android:text="@string/onair_tile"
+                            android:text="@string/success_stories_tile"
                             android:textAlignment="center"
                             android:textColor="@color/blackcolor"
                             android:textSize="@dimen/home_card_font"
@@ -539,47 +430,50 @@
                     android:layout_marginBottom="12dp"
                     android:clipToPadding="false"
                     android:gravity="center"
+                    android:paddingBottom="@dimen/home_card_elev"
                     android:orientation="vertical"
                     app:layout_column="1"
-                    android:paddingBottom="@dimen/home_card_elev"
                     app:layout_columnWeight="1"
                     app:layout_gravity="fill_horizontal"
-                    app:layout_row="1">
+                    app:layout_row="0">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/misc_but2_layout"
+                        android:id="@+id/faqs_tile"
                         android:layout_width="150dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@drawable/buttonback2"
                         android:clickable="true"
-                        android:elevation="@dimen/home_card_elev">
+                        android:elevation="@dimen/home_card_elev"
+                        app:layout_column="1"
+                        app:layout_row="0">
 
                         <ImageButton
+                            android:id="@+id/image_button5"
                             style="@android:style/Widget.Material.Light.ImageButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/misc_but2_text"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/imgbut_text5"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="2dp"
                             android:background="#FFFFFF"
                             android:clickable="false"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="8dp"
                             android:contentDescription="Card Image"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/misc_but2_text"
-                            app:srcCompat="@drawable/ic_who_guidelines" />
+                            app:layout_constraintTop_toBottomOf="@+id/imgbut_text5"
+                            app:srcCompat="@drawable/ic_chat" />
 
                         <TextView
-                            android:id="@+id/misc_but2_text"
+                            android:id="@+id/imgbut_text5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/mukta_semibold"
-                            android:text="@string/who_guidelines_tile"
+                            android:text="@string/faqs_tile"
                             android:textAlignment="center"
                             android:textColor="@color/blackcolor"
                             android:textSize="@dimen/home_card_font"
@@ -608,19 +502,17 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/buttonback2"
                         android:clickable="true"
-                        android:elevation="@dimen/home_card_elev"
-                        app:layout_column="0"
-                        app:layout_row="1">
+                        android:elevation="@dimen/home_card_elev">
 
                         <ImageButton
                             style="@android:style/Widget.Material.Light.ImageButton"
-                            android:layout_width="39dp"
-                            android:layout_height="43dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
                             android:layout_below="@+id/misc_but3_text"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="8dp"
                             android:layout_marginTop="6dp"
                             android:background="#FFFFFF"
                             android:clickable="false"
@@ -629,7 +521,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/misc_but3_text"
-                            app:layout_constraintVertical_bias="0.0"
                             app:srcCompat="@drawable/ic_mask_group_3" />
 
                         <TextView
@@ -639,6 +530,62 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/mukta_semibold"
                             android:text="@string/myth_busters_tile"
+                            android:textAlignment="center"
+                            android:textColor="@color/blackcolor"
+                            android:textSize="@dimen/home_card_font"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    android:paddingBottom="@dimen/home_card_elev"
+                    app:layout_gravity="fill_horizontal"
+                    app:layout_row="1">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/misc_but2_layout"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonback2"
+                        android:clickable="true"
+                        android:elevation="@dimen/home_card_elev">
+
+                        <ImageButton
+                            style="@android:style/Widget.Material.Light.ImageButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_below="@+id/misc_but2_text"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="#FFFFFF"
+                            android:clickable="false"
+                            android:contentDescription="Card Image"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/misc_but2_text"
+                            app:srcCompat="@drawable/ic_chat" />
+
+                        <TextView
+                            android:id="@+id/misc_but2_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/mukta_semibold"
+                            android:text="@string/chatbot_tile"
                             android:textAlignment="center"
                             android:textColor="@color/blackcolor"
                             android:textSize="@dimen/home_card_font"

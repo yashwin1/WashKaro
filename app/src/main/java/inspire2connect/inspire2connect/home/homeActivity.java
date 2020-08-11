@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +24,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -37,18 +37,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-import inspire2connect.inspire2connect.satyaChat.ChatActivity;
 import inspire2connect.inspire2connect.R;
 import inspire2connect.inspire2connect.about.aboutActivity;
-import inspire2connect.inspire2connect.contactTracer.ContactTracerActivity;
+import inspire2connect.inspire2connect.satyaChat.ChatActivity;
 import inspire2connect.inspire2connect.survey.maleFemaleActivity;
 import inspire2connect.inspire2connect.news.onAIrActivity;
+import inspire2connect.inspire2connect.tweets.tweetActivity;
 import inspire2connect.inspire2connect.utils.BaseActivity;
 import inspire2connect.inspire2connect.utils.LocaleHelper;
-import inspire2connect.inspire2connect.utils.urlActivity;
+import okio.Utf8;
 
 public class homeActivity extends BaseActivity implements View.OnClickListener {
 
@@ -58,6 +60,8 @@ public class homeActivity extends BaseActivity implements View.OnClickListener {
     Animation anim1, anim2, anim3, anim4;
     //    TextView mohfw_data1
     TextView mohfw_data2, mohfw_data3, mohfw_data4, mohfw_data5;
+    TextView mohfw_tv2, mohfw_tv3, mohfw_tv4, mohfw_tv5;
+    TextView mohfw_currency2, mohfw_currency3, mohfw_currency4, mohfw_currency5;
     ConstraintLayout[] statLayouts = new ConstraintLayout[4];
     LayoutInflater inflater;
     float downX, downY, upX, upY;
@@ -107,24 +111,44 @@ public class homeActivity extends BaseActivity implements View.OnClickListener {
         update_handle();
         initialize_view_flipper();
 
-        slideLists = new ArrayList<>();
-        slideLists = new ArrayList<>();
-        ll_but[0] = findViewById(R.id.contact_tracer_tile);
-        ll_but[1] = findViewById(R.id.onair_tile);
-        ll_but[2] = findViewById(R.id.misc_but3_layout);
-        ll_but[3] = findViewById(R.id.misc_but2_layout);
+        //Firebase Analytics
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("UID", firebaseUser.getUid());
+        bundle.putString("Screen", "Home Activity");
+        firebaseAnalytics.logEvent("CurrentScreen", bundle);
 
-        int[] btnToAdd = new int[]{0, 1, 2, 3};
+        slideLists = new ArrayList<>();
+        ll_but[0] = findViewById(R.id.success_stories_tile);
+        ll_but[1] = findViewById(R.id.misc_but3_layout);
+        ll_but[2] = findViewById(R.id.misc_but2_layout);
+        ll_but[3] = findViewById(R.id.faqs_tile);
+        ll_but[4] = findViewById(R.id.mohfw_ll2);
+        ll_but[5] = findViewById(R.id.mohfw_ll3);
+        ll_but[6] = findViewById(R.id.mohfw_ll4);
+        ll_but[7] = findViewById(R.id.mohfw_ll5);
+
+
+        int[] btnToAdd = new int[]{0, 1, 2, 3, 4, 5, 6 , 7};
 
         for (int i = 0; i < btnToAdd.length; i++) {
             ll_but[btnToAdd[i]].setOnClickListener(this);
         }
 
-        mohfw_data2 = findViewById(R.id.mohfw_data2);
+        mohfw_tv2 = findViewById(R.id.mohfw_tv2);
+        mohfw_tv3 = findViewById(R.id.mohfw_tv3);
+        mohfw_tv4 = findViewById(R.id.mohfw_tv4);
+        mohfw_tv5 = findViewById(R.id.mohfw_tv5);
+
         mohfw_data2 = findViewById(R.id.mohfw_data2);
         mohfw_data3 = findViewById(R.id.mohfw_data3);
         mohfw_data4 = findViewById(R.id.mohfw_data4);
         mohfw_data5 = findViewById(R.id.mohfw_data5);
+
+        mohfw_currency2 = findViewById(R.id.mohfw_currency2);
+        mohfw_currency3 = findViewById(R.id.mohfw_currency3);
+        mohfw_currency4 = findViewById(R.id.mohfw_currency4);
+        mohfw_currency5 = findViewById(R.id.mohfw_currency5);
 
         anim1 = AnimationUtils.loadAnimation(this, R.anim.anim1);
         anim2 = AnimationUtils.loadAnimation(this, R.anim.anim2);
@@ -142,7 +166,6 @@ public class homeActivity extends BaseActivity implements View.OnClickListener {
         fetchset_facts ();
 
         setInfographicFlipper();
-
     }
 
     private void initialize_view_flipper() {
@@ -174,39 +197,60 @@ public class homeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == flip_right) {
-            viewFlipper.stopFlipping();
-            viewFlipper.setInAnimation(anim2);
-            viewFlipper.setOutAnimation(anim3);
-            viewFlipper.showPrevious();
-        }
-        if (view == flip_left) {
-            viewFlipper.stopFlipping();
-            viewFlipper.setInAnimation(anim1);
-            viewFlipper.setOutAnimation(anim4);
-            viewFlipper.showNext();
-        }
-
         Intent i = null;
 
-//        if (view == ll_but[0]) {
-//            i = getGovernmentIntent(this);
-//        } else if (view == ll_but[1]) {
-//            i = new Intent(homeActivity.this, QuestionsActivity.class);
-//        } else
-        if (view == ll_but[0]) {
-            i = new Intent(homeActivity.this, ContactTracerActivity.class);
-        } else  if (view == ll_but[1]) {
-            i = new Intent(homeActivity.this, onAIrActivity.class);
-        }else if (view == ll_but[2]) {
-            i = getMythIntent(this);
-        }else if (view == ll_but[3]) {
-            i = getGuidelinesIntent(this);
+        switch (view.getId()){
+            case R.id.flipperLeft:
+                viewFlipper.stopFlipping();
+                viewFlipper.setInAnimation(anim1);
+                viewFlipper.setOutAnimation(anim4);
+                viewFlipper.showNext();
+                //Firebase Analytics
+                Bundle bundle = new Bundle();
+                bundle.putString("UID", firebaseUser.getUid());
+                bundle.putString("InfographicScroll", "Scrolled Left");
+                firebaseAnalytics.logEvent("ScrollingInfographics", bundle);
+                break;
+            case R.id.flipperRight:
+                viewFlipper.stopFlipping();
+                viewFlipper.setInAnimation(anim2);
+                viewFlipper.setOutAnimation(anim3);
+                viewFlipper.showPrevious();
+                //Firebase Analytics
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("UID", firebaseUser.getUid());
+                bundle2.putString("InfographicScroll", "Scrolled Right");
+                firebaseAnalytics.logEvent("ScrollingInfographics", bundle2);
+                break;
+            case R.id.misc_but2_layout:
+                i = new Intent(homeActivity.this, ChatActivity.class);
+                startActivity(i);
+                break;
+            case R.id.misc_but3_layout:
+                i = getMythIntent(this);
+                startActivity(i);
+                break;
+            case R.id.success_stories_tile:
+                i = getSuccessStoriesIntent(this);
+                startActivity(i);
+                break;
+            case R.id.faqs_tile:
+                i = getFAQsIntent(this);
+                startActivity(i);
+                break;
+            case R.id.mohfw_ll2:
+            case R.id.mohfw_ll3:
+            case R.id.mohfw_ll4:
+            case R.id.mohfw_ll5:
+                i = getTwitterIntent ( this );
+                startActivity(i);
+                break;
+
+            default:
+                i = null;
+                break;
         }
 
-        if(i!=null) {
-            startActivity(i);
-        }
     }
 
     @Override
@@ -222,18 +266,37 @@ public class homeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.lang_togg_butt) {
-            toggleLang(this);
-        } else if (id == R.id.Survey) {
-            Intent i = new Intent(homeActivity.this, maleFemaleActivity.class);
-            startActivity(i);
-        } else if (id == R.id.developers) {
-            Intent i = new Intent(homeActivity.this, aboutActivity.class);
-            startActivity(i);
-        } else if (id == R.id.privacy_policy) {
-            openPrivacyPolicy(this);
-        }
+        Intent i = null;
+        switch (id){
+            case R.id.lang_togg_butt:
+                // Firebase Analytics
+                Bundle bundle = new Bundle();
+                bundle.putString("UID", firebaseUser.getUid());
+                if(Locale.getDefault().getLanguage().equals("en"))
+                    bundle.putString("Current_Language", "Hindi");
+                else if(Locale.getDefault().getLanguage().equals("hi"))
+                    bundle.putString("Current_Language", "English");
 
+                bundle.putString("Language_Change_Activity", "Home Activity");
+                firebaseAnalytics.logEvent("Language_Toggle", bundle);
+
+                toggleLang(this);
+                break;
+            case R.id.Survey:
+                i = new Intent(homeActivity.this, maleFemaleActivity.class);
+                startActivity(i);
+                break;
+            case R.id.developers:
+                i = new Intent(homeActivity.this, aboutActivity.class);
+                startActivity(i);
+                break;
+            case R.id.privacy_policy:
+                openPrivacyPolicy(this);
+                break;
+            default:
+                i = null;
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -289,7 +352,11 @@ public class homeActivity extends BaseActivity implements View.OnClickListener {
                         float deltaX = downX - upX;
                         float deltaY = downY - upY;
                         if (deltaX == 0 && deltaY == 0) {
-                            onFlipperClicked();
+                            try {
+                                onFlipperClicked();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         return true;
@@ -299,26 +366,46 @@ public class homeActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    public void onFlipperClicked() {
+    public void onFlipperClicked() throws Exception {
 
         int i = viewFlipper.indexOfChild(viewFlipper.getCurrentView());
 
         String url = slideLists.get(i).InfoURL;
+        String code = slideLists.get(i).Code;
         Intent intnt = new Intent(homeActivity.this, InfographicsActivity.class);
+
+        // Firebase Analytics
+        Bundle bundle = new Bundle();
+        bundle.putString("UID", firebaseUser.getUid());
+        bundle.putString("Code", code);
+        firebaseAnalytics.logEvent("Infographic_Selected", bundle);
+
         intnt.putExtra("image", url);
         startActivity(intnt);
     }
 
     public void fetchset_facts() {
 
-        statsReference.addValueEventListener(new ValueEventListener() {
+        statsReference.child(getCurLangKey().toLowerCase()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Stats stats = dataSnapshot.getValue(Stats.class);
-                mohfw_data2.setText(stats.Fact1 );
-                mohfw_data3.setText(stats.Fact3 );
-                mohfw_data4.setText(stats.Fact2 );
-                mohfw_data5.setText(stats.Fact4 );
+
+                mohfw_tv2.setText(stats.Fact1);
+                mohfw_tv3.setText(stats.Fact2);
+                mohfw_tv4.setText(stats.Fact3);
+                mohfw_tv5.setText(stats.Fact4);
+
+                mohfw_data2.setText(stats.Fact1_value);
+                mohfw_data3.setText(stats.Fact2_value);
+                mohfw_data4.setText(stats.Fact3_value);
+                mohfw_data5.setText(stats.Fact4_value);
+
+                mohfw_currency2.setText(stats.Fact1_currency);
+                mohfw_currency3.setText(stats.Fact2_currency);
+                mohfw_currency4.setText(stats.Fact3_currency);
+                mohfw_currency5.setText(stats.Fact4_currency);
+
             }
 
             @Override

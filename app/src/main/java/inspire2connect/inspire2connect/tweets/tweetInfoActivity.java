@@ -1,4 +1,4 @@
-package inspire2connect.inspire2connect.home;
+package inspire2connect.inspire2connect.tweets;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import inspire2connect.inspire2connect.R;
 import inspire2connect.inspire2connect.utils.BaseActivity;
 import inspire2connect.inspire2connect.utils.LocaleHelper;
 
-public class InfographicsActivity extends BaseActivity {
+public class tweetInfoActivity extends BaseActivity {
 
     private static final int NONE = 0;
     private static final int DRAG = 1;
@@ -35,7 +35,7 @@ public class InfographicsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_infographics);
+        setContentView( R.layout.activity_infographics);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent i = this.getIntent();
@@ -44,17 +44,11 @@ public class InfographicsActivity extends BaseActivity {
 
         put_image(url);
 
-        // Firebase Analytics
-        Bundle bundle = new Bundle();
-        bundle.putString("UID", firebaseUser.getUid());
-        bundle.putString("Screen", "Infographic Page");
-        firebaseAnalytics.logEvent("CurrentScreen", bundle);
-
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+        super.attachBaseContext( LocaleHelper.onAttach(newBase));
     }
 
     @Override
@@ -171,3 +165,4 @@ public class InfographicsActivity extends BaseActivity {
 
 
 }
+

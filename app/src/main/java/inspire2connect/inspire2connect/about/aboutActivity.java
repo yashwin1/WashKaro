@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,8 +13,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import androidx.annotation.NonNull;
 
+import in.srain.cube.views.GridViewWithHeaderAndFooter;
 import inspire2connect.inspire2connect.R;
 import inspire2connect.inspire2connect.utils.BaseActivity;
 import inspire2connect.inspire2connect.utils.LocaleHelper;
@@ -28,6 +39,8 @@ public class aboutActivity extends BaseActivity implements View.OnClickListener 
 
     aboutElem[] elems;
 
+    Context ctx;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase));
@@ -35,6 +48,8 @@ public class aboutActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        ctx = this;
 
         elems = new aboutElem[]{
                 new aboutElem(this, R.string.akshat, R.string.tanuj_tag, R.string.akshatURL),
@@ -70,9 +85,9 @@ public class aboutActivity extends BaseActivity implements View.OnClickListener 
             getSupportActionBar().setTitle(getString(R.string.about_us));
         }
 
-        GridView gridView = findViewById(R.id.gridview);
+        GridViewWithHeaderAndFooter gridView = findViewById(R.id.gridview);
         about_adapter aboutAdapter = new about_adapter(this, elems);
-        gridView.setAdapter(aboutAdapter);
+//        gridView.setAdapter(aboutAdapter);
 
         tavlab = findViewById(R.id.tavlabLogo);
         precog = findViewById(R.id.iiitdLogo);
@@ -82,16 +97,67 @@ public class aboutActivity extends BaseActivity implements View.OnClickListener 
         precog.setOnClickListener(this);
         iiitd.setOnClickListener(this);
 
+        // Firebase Analytics
+        Bundle bundle = new Bundle();
+        bundle.putString("UID", firebaseUser.getUid());
+        bundle.putString("Screen", "About Page");
+        firebaseAnalytics.logEvent("CurrentScreen", bundle);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 String url = elems[position].url;
                 Intent i = new Intent(Intent.ACTION_VIEW);
+
+                //Firebase Analytics
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("UID", firebaseUser.getUid());
+                bundle1.putString("Profile_Visited", elems[position].name);
+                bundle1.putString("Profile_Visited_URL", Uri.encode(elems[position].url));
+                firebaseAnalytics.logEvent("Profile_Visits", bundle1);
+
                 i.setData(Uri.parse(url));
                 startActivity(i);
             }
         });
 
+        LayoutInflater footerInflater = LayoutInflater.from(this);
+        View footer = footerInflater.inflate(R.layout.references_view, null);
+        footer.findViewById(R.id.tbassnindiaLogo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = ctx.getString(R.string.tbassindia_web);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+
+                //Firebase Analytics
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("UID", firebaseUser.getUid());
+                bundle1.putString("Reference_URL", url);
+                firebaseAnalytics.logEvent("References_Visited", bundle1);
+
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        footer.findViewById(R.id.tbcindia).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = ctx.getString(R.string.tbcindia_web);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+
+                //Firebase Analytics
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("UID", firebaseUser.getUid());
+                bundle1.putString("Reference_URL", url);
+                firebaseAnalytics.logEvent("References_Visited", bundle1);
+
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+        gridView.addFooterView(footer);
+
+        gridView.setAdapter(aboutAdapter);
 
     }
 
@@ -122,6 +188,13 @@ public class aboutActivity extends BaseActivity implements View.OnClickListener 
                 url = getString(R.string.tavlabURL);
                 break;
         }
+
+        //Firebase Analytics
+        Bundle bundle = new Bundle();
+        bundle.putString("UID", firebaseUser.getUid());
+        bundle.putString("URL", url);
+        firebaseAnalytics.logEvent("URLs_Visited", bundle);
+
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
